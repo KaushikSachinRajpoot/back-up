@@ -36,6 +36,7 @@ app.post('/todos', async (req, res) => {
   try {
     const table = await client2.query("SELECT * from emp");
     res.json(table.rows);
+    res.end();
   } catch (error) {
     console.log('table error', error);
   }finally{
@@ -60,7 +61,8 @@ app.post('/insert', async (req, res) => {
       "INSERT INTO emp (id, name, pos) VALUES ($1, $2, $3)",
       [id, name, pos]
     );
-    res.json(insertedRow.rows)
+    res.json(insertedRow.rows);
+    res.end();
   } catch (error) {
     console.log(error.massage);
   }
@@ -88,7 +90,8 @@ const fetchAndDisplayDatabases = async(req,res) => {
       return b - a;
     });
     if(sortedVersionNumberArray[0]){highestVersion = parseInt(sortedVersionNumberArray[0]);}
-    res.json({ data: databases, highestVersion })
+    res.json({ data: databases, highestVersion });
+    res.end();
   } catch (error) {
     console.error('Error fetching databases:', error);
   }finally{
@@ -120,6 +123,7 @@ app.post('/createDatabase', async (req, res) => {
     });
     if(sortedVersionNumberArray[0]){highestVersion = parseInt(sortedVersionNumberArray[0]);}
     res.status(200).json({ message: 'Database created successfully', highestVersion });
+    res.end();
   } catch (error) {
     console.error('Error creating database:', error);
     res.status(500).json({ error: 'An error occurred while creating the database' });
