@@ -40,7 +40,7 @@ app.post('/todos', async (req, res) => {
   } catch (error) {
     console.log('table error', error);
   }finally{
-    client2.release();
+    client2.end();
   }
 })
 
